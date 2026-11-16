@@ -21,7 +21,7 @@ class AccountOut(BaseModel):
 
 
 @app.post("/accounts", response_model=AccountOut)
-def create_account(account: AccountCreate, status_code=201, conn=Depends(get_conn)):
+def create_account(account: AccountCreate, conn=Depends(get_conn)):
     row = conn.execute(
         "INSERT INTO account (owner_name, currency) VALUES (%s, %s) RETURNING *",
         (account.owner_name, account.currency),
