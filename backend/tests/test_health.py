@@ -26,3 +26,8 @@ def test_unknown_accountid():
     response = client.get("/accounts/999999999999")
     assert response.status_code == 404
 
+
+def test_deposit_increases_balance():
+    response = client.post("/accounts/1/deposits", json={"amount": "100.00"})
+    assert response.status_code == 201
+    assert response.json()["balance"] == "1450.00"

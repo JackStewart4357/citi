@@ -7,6 +7,10 @@ from datetime import datetime
 
 app = FastAPI(title = "Ledger Lite")
 
+
+class AmountIn(BaseModel):
+    amount: Decimal = Field(gt=0, max_digits=12, decimal_places=2)
+
 class AccountCreate(BaseModel):
     owner_name: str = Field(min_length=1, max_length=50)
     currency: Literal["GBP", "USD", "EUR"]
@@ -18,6 +22,14 @@ class AccountOut(BaseModel):
     currency: str
     balance: Decimal
     created_at: datetime
+
+@app.post("/accounts/{account_id}/deposits", status_code=201, response_model=AccountOut)
+def deposit(account_id: int, body: AmountIn, conn=Depends(get_conn)):
+    account = conn.execute("UPDATE account SET balance = balance + %s WHERE id = %s " "RETURNING id, owner_name, currency, balance, created_at",(body.amount, account_id,)).fetchone()
+    if account is None:
+        raise HTTPException(status_code=404, detail="Account id {account_id} was not found")
+    conn.execute("INSERT INTO btransaction (account_id, type, amount) VALUES (%s, 'deposit', %s)", (account_id, body.amount,),)
+    return account
 
 
 @app.post("/accounts", response_model=AccountOut)
