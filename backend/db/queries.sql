@@ -1,8 +1,8 @@
 -- 1. All GBP accounts, highest balance first.
 
-SELECT owner_name, type
+SELECT owner_name, currency
 FROM account
-WHERE type = 'GBP'
+WHERE currency = 'GBP'
 ORDER BY balance DESC;
 
 -- 2. All transactions for account 1, newest first
