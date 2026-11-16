@@ -6,7 +6,7 @@ WHERE currency = 'GBP'
 ORDER BY balance DESC;
 
 -- 2. All transactions for account 1, newest first
-SELECT account_id, currency, amount, created_at
+SELECT account_id, type, amount, created_at
 FROM btransaction
 WHERE account_id = 1
 ORDER BY created_at DESC;
@@ -20,9 +20,9 @@ ORDER BY number_of_transactions DESC;
 
 -- 4. Total deposited per account (type deposit only).
 
-SELECT SUM(amount), currency, account_id
-FROM btransaction b WHERE currency = 'deposit'
-GROUP BY b.currency, account_id;
+SELECT SUM(amount), type, account_id
+FROM btransaction b WHERE type = 'deposit'
+GROUP BY b.type, account_id;
 
 -- 5. Owners who have never sent or received a transfer
 
@@ -31,7 +31,7 @@ FROM account
 WHERE id NOT IN (
     SELECT account_id
     FROM btransaction
-    WHERE currency = 'transfer_in' OR currency = 'transfer_out'
+    WHERE type = 'transfer_in' OR type = 'transfer_out'
 );
 
 -- 6. The largest single transaction amount per account

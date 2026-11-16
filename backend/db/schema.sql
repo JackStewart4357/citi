@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS btransaction;
 DROP TABLE IF EXISTS account;
 DROP TYPE IF EXISTS transaction_type;
-DROP TYPE IF EXISTS currency;
+DROP TYPE IF EXISTS currency_type;
 
 CREATE TYPE currency_type AS ENUM ( 'GBP', 'USD', 'EUR');
 
