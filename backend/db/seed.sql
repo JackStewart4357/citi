@@ -1,8 +1,8 @@
 
-INSERT INTO account (owner_name, type) VALUES ('Aoife Byrne', 'GBP');
-INSERT INTO account (owner_name, type) VALUES ('Marcus Chen', 'GBP');
-INSERT INTO account (owner_name, type) VALUES ('Priya Nair', 'USD');
-INSERT INTO account (owner_name, type) VALUES ('Tomas Keller', 'EUR');
+INSERT INTO account (owner_name, currency) VALUES ('Aoife Byrne', 'GBP');
+INSERT INTO account (owner_name, currency) VALUES ('Marcus Chen', 'GBP');
+INSERT INTO account (owner_name, currency) VALUES ('Priya Nair', 'USD');
+INSERT INTO account (owner_name, currency) VALUES ('Tomas Keller', 'EUR');
 
 
 INSERT INTO btransaction (account_id, type, amount, created_at) VALUES (1, 'deposit', 1500, '2026-10-01');
